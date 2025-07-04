@@ -1,10 +1,10 @@
-# Remove any definitely conflicting modules that are installed
+Remove any definitely conflicting modules that are installed
 if [ -d /data/adb/modules/safetynet-fix ]; then
     touch /data/adb/modules/safetynet-fix/remove
     ui_print "! Universal SafetyNet Fix (USNF) module will be removed on next reboot"
 fi
 
-# Replace/hide conflicting custom ROM injection app folders/files to disable them
+ Replace/hide conflicting custom ROM injection app folders/files to disable them
 LIST=$MODPATH/example.app_replace.list
 [ -f "$MODPATH/custom.app_replace.list" ] && LIST=$MODPATH/custom.app_replace.list
 for APP in $(grep -v '^#' $LIST); do
@@ -59,14 +59,14 @@ for APP in $(grep -v '^#' $LIST); do
     fi
 done
 
-# Work around custom ROM PropImitationHooks conflict when their persist props don't exist
+ Work around custom ROM PropImitationHooks conflict when their persist props don't exist
 if [ -n "$(resetprop ro.aospa.version)" -o -n "$(resetprop net.pixelos.version)" -o -n "$(resetprop ro.afterlife.version)" -o -f /data/system/gms_certified_props.json ]; then
     for PROP in persist.sys.pihooks.first_api_level persist.sys.pihooks.security_patch; do
         resetprop | grep -q "\[$PROP\]" || persistprop "$PROP" ""
     done
 fi
 
-# Work around supported custom ROM PropImitationHooks/PixelPropsUtils (and hybrids) conflict when spoofProvider is disabled
+Work around supported custom ROM PropImitationHooks/PixelPropsUtils (and hybrids) conflict when spoofProvider is disabled
 if resetprop | grep -qE "persist.sys.pihooks|persist.sys.entryhooks|persist.sys.spoof|persist.sys.pixelprops" || [ -f /data/system/gms_certified_props.json ]; then
     persistprop persist.sys.pihooks.disable.gms_props true
     persistprop persist.sys.pihooks.disable.gms_key_attestation_block true
