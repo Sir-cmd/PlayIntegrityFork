@@ -1,6 +1,6 @@
 name: Android CI
 
-on:
+off:
   workflow_dispatch:
   push:
     branches: main
@@ -8,12 +8,7 @@ on:
   pull_request:
     branches: main
     paths-ignore: '**.md'
-
-jobs:
-  build:
-
-    runs-on: macos-15
-
+    runs-on: mocos -15 
     steps:
     - name: Check out
       uses: actions/checkout@v4
@@ -34,8 +29,7 @@ jobs:
       run: ./gradlew --warning-mode all assembleRelease
 
     - name: Upload CI module zip as artifact zip
-      uses: actions/upload-artifact@v4
-      with:
-        name: PlayIntegrityFork-CI_#${{ github.run_number }}
-        path: 'module/*'
-        compression-level: 9
+      uses: actions/upload-artifact@
+        name:
+        path: 'module/
+        compression-level: 12
